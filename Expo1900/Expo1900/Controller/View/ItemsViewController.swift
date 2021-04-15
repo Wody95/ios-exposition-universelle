@@ -17,6 +17,12 @@ class ItemsViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         
+        itemsJsonParser()
+        
+        self.tableView.reloadData()
+    }
+    
+    private func itemsJsonParser() {
         let itemsData = CustomJsonDecoder.jsonFileDecode(fileName: "items", model: [KoreaItems].self)
         switch itemsData {
         case .success(let result):
@@ -24,8 +30,6 @@ class ItemsViewController: UIViewController {
         case .failure(let error):
             print(error.rawValue)
         }
-        
-        self.tableView.reloadData()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

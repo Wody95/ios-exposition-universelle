@@ -17,6 +17,10 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        expositionUniversellesJsonParser()
+    }
+    
+    private func expositionUniversellesJsonParser() {
         let expositionUniverselles = CustomJsonDecoder.jsonFileDecode(fileName: "exposition_universelle_1900", model: ExpositionUniverselle.self)
         switch expositionUniverselles {
         case .success(let result):
@@ -24,6 +28,14 @@ class ViewController: UIViewController {
         case .failure(let error):
             print(error.rawValue)
         }
+    }
+    
+    private func configureView(data: ExpositionUniverselle) {
+        titleLabel.text = data.title
+        visitorsLabel.text = String(data.visitors)
+        locationLabel.text = data.location
+        durationLabel.text = data.duration
+        descLabel.text = data.description
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -34,14 +46,6 @@ class ViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.navigationController?.isNavigationBarHidden = false
-    }
-    
-    private func configureView(data: ExpositionUniverselle) {
-        titleLabel.text = data.title
-        visitorsLabel.text = String(data.visitors)
-        locationLabel.text = data.location
-        durationLabel.text = data.duration
-        descLabel.text = data.description
     }
     
 }
